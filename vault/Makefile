@@ -1,8 +1,8 @@
-app: build-image deploy-app
+app: build-app-image deploy-app
 
 infra: deploy-vault deploy-infra
 
-build-image:
+build-app-image:
 	@echo --------------------------------------
 	@echo Building app image
 	@echo --------------------------------------
@@ -15,6 +15,22 @@ deploy-app:
 	@echo Deploying app
 	@echo --------------------------------------
 	kubectl apply -f .infra/app/install.yml
+	@echo
+	@echo Done!
+
+build-consumer-image:
+	@echo --------------------------------------
+	@echo Building consumer image
+	@echo --------------------------------------
+	docker build ./consumer -f ./consumer/Dockerfile -t vault-demo-consumer:latest
+	@echo
+	@echo Done!
+
+deploy-consumer:
+	@echo --------------------------------------
+	@echo Deploying consumer
+	@echo --------------------------------------
+	kubectl apply -f .infra/consumer/install.yml
 	@echo
 	@echo Done!
 
