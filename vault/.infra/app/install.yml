@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-app
+  namespace: app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      serviceAccountName: sa-app
+      containers:
+        - name: vault-demo-app
+          image: vault-demo-app:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "16Mi"
+              cpu: "100m"
+            limits:
+              memory: "16Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-app
+  namespace: app
+spec:
+  selector:
+    app: app
+  ports:
+    - port: 3000
+      targetPort: 3000
