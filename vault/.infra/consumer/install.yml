@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: vault-demo-consumer
-          image: vault-demo-consumer:latest
+          image: brunopadz/vault-demo-consumer:latest
           imagePullPolicy: IfNotPresent
           resources:
             requests:

@@ -1,35 +1,6 @@
+# Use a secret manager!
+
 global:
-  enabled: true
-  tlsDisable: true
-
-injector:
-  enabled: false
-
-server:
-  image:
-    repository: "vault"
-    tag: "1.9.2"
-
-  resources:
-    requests:
-      memory: 32Mi
-      cpu: 100m
-    limits:
-      memory: 128Mi
-      cpu: 200m
-
-  readinessProbe:
-    enabled: true
-    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
-  livenessProbe:
-    enabled: true
-    path: "/v1/sys/health?standbyok=true"
-    initialDelaySeconds: 60
-
-  standalone:
-    enabled: true
-ui:
-  enabled: true
-  serviceType: "ClusterIP"
-  serviceNodePort: null
-  externalPort: 8200
+  postgresql:
+    auth:
+      postgresPassword: "r00tp4ssw0rd"
